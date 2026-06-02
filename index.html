@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Alae 🌹</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --crimson: #8B0000;
+    --rose: #C41E3A;
+    --gold: #D4AF37;
+    --gold-light: #F0D060;
+    --soft-gold: #E8C96A;
+    --black: #0A0A0A;
+    --near-black: #111111;
+    --pink: #E8829A;
+    --pink-light: #F2B5C5;
+    --pink-pale: #FDE8EE;
+    --off-white: #FDF6F0;
+  }
+
+  body {
+    background-color: var(--black);
+    color: var(--off-white);
+    font-family: 'Cormorant Garamond', serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* Stars / sparkles background */
+  .stars {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .star {
+    position: absolute;
+    background: var(--gold);
+    border-radius: 50%;
+    animation: twinkle var(--dur, 3s) ease-in-out infinite var(--delay, 0s);
+    opacity: 0;
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0; transform: scale(0.5); }
+    50% { opacity: 0.7; transform: scale(1); }
+  }
+
+  /* Main container */
+  .page {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  /* Header section */
+  .hero {
+    text-align: center;
+    padding: 80px 24px 40px;
+    max-width: 800px;
+    width: 100%;
+  }
+
+  .golden-line {
+    width: 120px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 0 auto 32px;
+  }
+
+  .name-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(64px, 14vw, 130px);
+    font-weight: 700;
+    font-style: italic;
+    line-height: 0.9;
+    letter-spacing: -2px;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 40%, var(--soft-gold) 60%, var(--gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 16px;
+    animation: shimmer 4s ease-in-out infinite;
+    background-size: 200% 200%;
+  }
+
+  @keyframes shimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  .subtitle-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(15px, 3vw, 20px);
+    font-weight: 300;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--pink-light);
+    margin-bottom: 32px;
+  }
+
+  /* Message box */
+  .message-card {
+    background: linear-gradient(135deg, rgba(139,0,0,0.18), rgba(196,30,58,0.12), rgba(212,175,55,0.10));
+    border: 1px solid rgba(212,175,55,0.35);
+    border-radius: 4px;
+    padding: 40px 48px;
+    max-width: 680px;
+    margin: 0 auto 60px;
+    position: relative;
+    text-align: center;
+    animation: fadeUp 1.2s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .message-card::before, .message-card::after {
+    content: '✦';
+    position: absolute;
+    color: var(--gold);
+    font-size: 18px;
+    opacity: 0.6;
+  }
+  .message-card::before { top: 12px; left: 16px; }
+  .message-card::after { bottom: 12px; right: 16px; }
+
+  .big-message {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 5vw, 46px);
+    font-weight: 700;
+    font-style: italic;
+    line-height: 1.25;
+    color: var(--off-white);
+    margin-bottom: 20px;
+  }
+
+  .big-message span.accent {
+    color: var(--rose);
+    text-shadow: 0 0 30px rgba(196,30,58,0.4);
+  }
+
+  .big-message span.gold-acc {
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .sub-message {
+    font-size: 18px;
+    font-style: italic;
+    color: var(--pink-light);
+    letter-spacing: 1px;
+    line-height: 1.7;
+  }
+
+  /* Floating rose decorations */
+  .rose-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    font-size: 24px;
+  }
+
+  /* Bottom flower garden */
+  .flower-garden {
+    width: 100%;
+    position: relative;
+    margin-top: auto;
+    overflow: hidden;
+  }
+
+  .flower-svg-wrap {
+    width: 100%;
+    display: block;
+  }
+
+  /* Floating hearts */
+  .hearts-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .heart {
+    position: absolute;
+    bottom: -40px;
+    font-size: 18px;
+    animation: floatHeart var(--hdur, 8s) linear infinite var(--hdelay, 0s);
+    opacity: 0;
+  }
+
+  @keyframes floatHeart {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.6; }
+    90% { opacity: 0.3; }
+    100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+  }
+
+  /* Gold divider */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 0 auto 50px;
+    max-width: 400px;
+    padding: 0 24px;
+  }
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold));
+  }
+  .divider-line.right {
+    background: linear-gradient(90deg, var(--gold), transparent);
+  }
+  .divider-icon {
+    color: var(--gold);
+    font-size: 20px;
+  }
+
+  /* Poem block */
+  .poem-block {
+    text-align: center;
+    max-width: 500px;
+    padding: 0 24px;
+    margin: 0 auto 60px;
+    animation: fadeUp 1.5s ease 0.3s both;
+  }
+
+  .poem-block p {
+    font-size: clamp(16px, 2.5vw, 20px);
+    font-style: italic;
+    color: rgba(253,246,240,0.75);
+    line-height: 2;
+    margin-bottom: 4px;
+  }
+
+  .poem-block p.pink-line {
+    color: var(--pink);
+  }
+
+  /* Petals falling */
+  .petal {
+    position: fixed;
+    top: -20px;
+    font-size: 16px;
+    animation: fallPetal var(--pdur, 10s) linear infinite var(--pdelay, 0s);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  @keyframes fallPetal {
+    0% { transform: translateY(-20px) rotate(0deg) translateX(0px); opacity: 0; }
+    5% { opacity: 0.7; }
+    95% { opacity: 0.4; }
+    100% { transform: translateY(110vh) rotate(720deg) translateX(60px); opacity: 0; }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- Stars background -->
+<div class="stars" id="stars"></div>
+
+<!-- Falling petals -->
+<div id="petals"></div>
+
+<!-- Floating hearts -->
+<div class="hearts-container" id="hearts"></div>
+
+<div class="page">
+
+  <section class="hero">
+    <div class="golden-line"></div>
+    <div class="rose-row">🌹 🥀 🌹</div>
+    <h1 class="name-title">Alae</h1>
+    <p class="subtitle-text">mon amour &nbsp;·&nbsp; my everything</p>
+  </section>
+
+  <div class="message-card">
+    <p class="big-message">
+      I <span class="accent">love</span> Alae<br>
+      <span class="gold-acc">So mucchh</span>
+    </p>
+    <p class="sub-message">
+      Every single day, every single moment<br>
+      you make my world brighter just by being in it. 💛
+    </p>
+  </div>
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <span class="divider-icon">✦</span>
+    <div class="divider-line right"></div>
+  </div>
+
+  <div class="poem-block">
+    <p>Like roses bloom in darkest night,</p>
+    <p class="pink-line">you fill my heart with warmth and light.</p>
+    <p>In red and gold, in pink and black,</p>
+    <p class="pink-line">you are the love I'll never lack.</p>
+  </div>
+
+  <!-- Flower garden at bottom -->
+  <div class="flower-garden">
+    <svg class="flower-svg-wrap" viewBox="0 0 1200 420" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax slice">
+      <defs>
+        <!-- Stem gradient -->
+        <linearGradient id="stemG" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#2d5a1b"/>
+          <stop offset="100%" style="stop-color:#1a3a0d"/>
+        </linearGradient>
+        <!-- Petal gradients -->
+        <radialGradient id="rpetal" cx="50%" cy="40%" r="60%">
+          <stop offset="0%" style="stop-color:#FF4466"/>
+          <stop offset="60%" style="stop-color:#C41E3A"/>
+          <stop offset="100%" style="stop-color:#8B0000"/>
+        </radialGradient>
+        <radialGradient id="gpetal" cx="50%" cy="40%" r="60%">
+          <stop offset="0%" style="stop-color:#F4D06F"/>
+          <stop offset="60%" style="stop-color:#D4AF37"/>
+          <stop offset="100%" style="stop-color:#A07C10"/>
+        </radialGradient>
+        <radialGradient id="ppetal" cx="50%" cy="40%" r="60%">
+          <stop offset="0%" style="stop-color:#F9C0D0"/>
+          <stop offset="60%" style="stop-color:#E8829A"/>
+          <stop offset="100%" style="stop-color:#C85070"/>
+        </radialGradient>
+        <radialGradient id="dpetal" cx="50%" cy="40%" r="60%">
+          <stop offset="0%" style="stop-color:#CC2244"/>
+          <stop offset="60%" style="stop-color:#8B0000"/>
+          <stop offset="100%" style="stop-color:#500010"/>
+        </radialGradient>
+        <!-- Leaf gradient -->
+        <linearGradient id="leafG" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#3a7a20"/>
+          <stop offset="100%" style="stop-color:#1a4a0a"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Ground -->
+      <rect x="0" y="380" width="1200" height="40" fill="#0A0A0A"/>
+      <rect x="0" y="372" width="1200" height="12" rx="4" fill="#1a0a0a"/>
+
+      <!-- ====== ROSE MACROS ====== -->
+      <!-- Rose: big red center-left (x=160) -->
+      <g transform="translate(160, 0)">
+        <!-- stem -->
+        <line x1="0" y1="370" x2="0" y2="200" stroke="url(#stemG)" stroke-width="5" stroke-linecap="round"/>
+        <!-- leaves -->
+        <path d="M0 290 Q-35 270 -40 245 Q-15 255 0 270Z" fill="url(#leafG)" opacity="0.9"/>
+        <path d="M0 310 Q32 290 38 265 Q14 275 0 290Z" fill="url(#leafG)" opacity="0.9"/>
+        <!-- thorns -->
+        <line x1="0" y1="340" x2="-8" y2="330" stroke="#1a4a0a" stroke-width="2"/>
+        <!-- petals outer -->
+        <ellipse cx="0" cy="200" rx="28" ry="18" fill="url(#rpetal)" opacity="0.85" transform="rotate(-40 0 200)"/>
+        <ellipse cx="0" cy="200" rx="28" ry="18" fill="url(#rpetal)" opacity="0.85" transform="rotate(0 0 200)"/>
+        <ellipse cx="0" cy="200" rx="28" ry="18" fill="url(#rpetal)" opacity="0.85" transform="rotate(40 0 200)"/>
+        <ellipse cx="0" cy="200" rx="28" ry="18" fill="url(#rpetal)" opacity="0.85" transform="rotate(80 0 200)"/>
+        <ellipse cx="0" cy="200" rx="28" ry="18" fill="url(#rpetal)" opacity="0.85" transform="rotate(120 0 200)"/>
+        <ellipse cx="0" cy="200" rx="28" ry="18" fill="url(#rpetal)" opacity="0.85" transform="rotate(160 0 200)"/>
+        <!-- petals inner -->
+        <ellipse cx="0" cy="200" rx="20" ry="13" fill="url(#dpetal)" transform="rotate(-20 0 200)"/>
+        <ellipse cx="0" cy="200" rx="20" ry="13" fill="url(#dpetal)" transform="rotate(40 0 200)"/>
+        <ellipse cx="0" cy="200" rx="20" ry="13" fill="url(#dpetal)" transform="rotate(100 0 200)"/>
+        <!-- center -->
+        <circle cx="0" cy="200" r="9" fill="#500010"/>
+        <circle cx="0" cy="200" r="5" fill="#300008"/>
+      </g>
+
+      <!-- Rose: gold medium (x=310) -->
+      <g transform="translate(310, 30)">
+        <line x1="0" y1="370" x2="0" y2="230" stroke="url(#stemG)" stroke-width="4"/>
+        <path d="M0 300 Q-28 282 -32 260 Q-10 268 0 282Z" fill="url(#leafG)"/>
+        <path d="M0 320 Q26 304 30 282 Q10 290 0 304Z" fill="url(#leafG)"/>
+        <ellipse cx="0" cy="230" rx="24" ry="15" fill="url(#gpetal)" opacity="0.9" transform="rotate(-40 0 230)"/>
+        <ellipse cx="0" cy="230" rx="24" ry="15" fill="url(#gpetal)" opacity="0.9" transform="rotate(0 0 230)"/>
+        <ellipse cx="0" cy="230" rx="24" ry="15" fill="url(#gpetal)" opacity="0.9" transform="rotate(40 0 230)"/>
+        <ellipse cx="0" cy="230" rx="24" ry="15" fill="url(#gpetal)" opacity="0.9" transform="rotate(80 0 230)"/>
+        <ellipse cx="0" cy="230" rx="24" ry="15" fill="url(#gpetal)" opacity="0.9" transform="rotate(120 0 230)"/>
+        <ellipse cx="0" cy="230" rx="24" ry="15" fill="url(#gpetal)" opacity="0.9" transform="rotate(160 0 230)"/>
+        <ellipse cx="0" cy="230" rx="17" ry="10" fill="#A07C10" transform="rotate(20 0 230)"/>
+        <ellipse cx="0" cy="230" rx="17" ry="10" fill="#A07C10" transform="rotate(80 0 230)"/>
+        <ellipse cx="0" cy="230" rx="17" ry="10" fill="#A07C10" transform="rotate(140 0 230)"/>
+        <circle cx="0" cy="230" r="7" fill="#7a5c08"/>
+      </g>
+
+      <!-- Rose: pink small (x=440) -->
+      <g transform="translate(440, 60)">
+        <line x1="0" y1="370" x2="0" y2="260" stroke="url(#stemG)" stroke-width="3.5"/>
+        <path d="M0 320 Q-22 305 -25 285 Q-8 292 0 305Z" fill="url(#leafG)"/>
+        <ellipse cx="0" cy="260" rx="22" ry="14" fill="url(#ppetal)" opacity="0.9" transform="rotate(-40 0 260)"/>
+        <ellipse cx="0" cy="260" rx="22" ry="14" fill="url(#ppetal)" opacity="0.9" transform="rotate(0 0 260)"/>
+        <ellipse cx="0" cy="260" rx="22" ry="14" fill="url(#ppetal)" opacity="0.9" transform="rotate(40 0 260)"/>
+        <ellipse cx="0" cy="260" rx="22" ry="14" fill="url(#ppetal)" opacity="0.9" transform="rotate(80 0 260)"/>
+        <ellipse cx="0" cy="260" rx="22" ry="14" fill="url(#ppetal)" opacity="0.9" transform="rotate(120 0 260)"/>
+        <ellipse cx="0" cy="260" rx="22" ry="14" fill="url(#ppetal)" opacity="0.9" transform="rotate(160 0 260)"/>
+        <ellipse cx="0" cy="260" rx="15" ry="9" fill="#C85070" transform="rotate(20 0 260)"/>
+        <ellipse cx="0" cy="260" rx="15" ry="9" fill="#C85070" transform="rotate(100 0 260)"/>
+        <circle cx="0" cy="260" r="6" fill="#a03050"/>
+      </g>
+
+      <!-- Rose: big red right-center (x=600) TALLEST -->
+      <g transform="translate(600, -20)">
+        <line x1="0" y1="370" x2="0" y2="175" stroke="url(#stemG)" stroke-width="5.5"/>
+        <path d="M0 270 Q-38 250 -42 224 Q-16 234 0 250Z" fill="url(#leafG)"/>
+        <path d="M0 295 Q35 275 40 250 Q16 258 0 274Z" fill="url(#leafG)"/>
+        <path d="M0 320 Q-28 304 -32 282 Q-10 290 0 305Z" fill="url(#leafG)"/>
+        <ellipse cx="0" cy="175" rx="32" ry="20" fill="url(#rpetal)" opacity="0.9" transform="rotate(-40 0 175)"/>
+        <ellipse cx="0" cy="175" rx="32" ry="20" fill="url(#rpetal)" opacity="0.9" transform="rotate(0 0 175)"/>
+        <ellipse cx="0" cy="175" rx="32" ry="20" fill="url(#rpetal)" opacity="0.9" transform="rotate(40 0 175)"/>
+        <ellipse cx="0" cy="175" rx="32" ry="20" fill="url(#rpetal)" opacity="0.9" transform="rotate(80 0 175)"/>
+        <ellipse cx="0" cy="175" rx="32" ry="20" fill="url(#rpetal)" opacity="0.9" transform="rotate(120 0 175)"/>
+        <ellipse cx="0" cy="175" rx="32" ry="20" fill="url(#rpetal)" opacity="0.9" transform="rotate(160 0 175)"/>
+        <ellipse cx="0" cy="175" rx="22" ry="14" fill="url(#dpetal)" transform="rotate(-20 0 175)"/>
+        <ellipse cx="0" cy="175" rx="22" ry="14" fill="url(#dpetal)" transform="rotate(40 0 175)"/>
+        <ellipse cx="0" cy="175" rx="22" ry="14" fill="url(#dpetal)" transform="rotate(100 0 175)"/>
+        <circle cx="0" cy="175" r="10" fill="#400008"/>
+        <circle cx="0" cy="175" r="5" fill="#200004"/>
+      </g>
+
+      <!-- Rose: pink medium (x=750) -->
+      <g transform="translate(750, 40)">
+        <line x1="0" y1="370" x2="0" y2="220" stroke="url(#stemG)" stroke-width="4.5"/>
+        <path d="M0 290 Q-30 272 -34 250 Q-12 260 0 274Z" fill="url(#leafG)"/>
+        <path d="M0 310 Q28 294 32 270 Q12 278 0 294Z" fill="url(#leafG)"/>
+        <ellipse cx="0" cy="220" rx="26" ry="16" fill="url(#ppetal)" opacity="0.9" transform="rotate(-40 0 220)"/>
+        <ellipse cx="0" cy="220" rx="26" ry="16" fill="url(#ppetal)" opacity="0.9" transform="rotate(0 0 220)"/>
+        <ellipse cx="0" cy="220" rx="26" ry="16" fill="url(#ppetal)" opacity="0.9" transform="rotate(40 0 220)"/>
+        <ellipse cx="0" cy="220" rx="26" ry="16" fill="url(#ppetal)" opacity="0.9" transform="rotate(80 0 220)"/>
+        <ellipse cx="0" cy="220" rx="26" ry="16" fill="url(#ppetal)" opacity="0.9" transform="rotate(120 0 220)"/>
+        <ellipse cx="0" cy="220" rx="26" ry="16" fill="url(#ppetal)" opacity="0.9" transform="rotate(160 0 220)"/>
+        <ellipse cx="0" cy="220" rx="18" ry="11" fill="#C85070" transform="rotate(20 0 220)"/>
+        <ellipse cx="0" cy="220" rx="18" ry="11" fill="#C85070" transform="rotate(90 0 220)"/>
+        <circle cx="0" cy="220" r="8" fill="#a03050"/>
+      </g>
+
+      <!-- Rose: gold tall (x=870) -->
+      <g transform="translate(870, 10)">
+        <line x1="0" y1="370" x2="0" y2="200" stroke="url(#stemG)" stroke-width="4"/>
+        <path d="M0 280 Q-30 262 -34 240 Q-12 250 0 264Z" fill="url(#leafG)"/>
+        <path d="M0 305 Q28 288 32 264 Q12 272 0 287Z" fill="url(#leafG)"/>
+        <ellipse cx="0" cy="200" rx="25" ry="16" fill="url(#gpetal)" opacity="0.9" transform="rotate(-40 0 200)"/>
+        <ellipse cx="0" cy="200" rx="25" ry="16" fill="url(#gpetal)" opacity="0.9" transform="rotate(0 0 200)"/>
+        <ellipse cx="0" cy="200" rx="25" ry="16" fill="url(#gpetal)" opacity="0.9" transform="rotate(40 0 200)"/>
+        <ellipse cx="0" cy="200" rx="25" ry="16" fill="url(#gpetal)" opacity="0.9" transform="rotate(80 0 200)"/>
+        <ellipse cx="0" cy="200" rx="25" ry="16" fill="url(#gpetal)" opacity="0.9" transform="rotate(120 0 200)"/>
+        <ellipse cx="0" cy="200" rx="25" ry="16" fill="url(#gpetal)" opacity="0.9" transform="rotate(160 0 200)"/>
+        <ellipse cx="0" cy="200" rx="17" ry="10" fill="#A07C10" transform="rotate(20 0 200)"/>
+        <ellipse cx="0" cy="200" rx="17" ry="10" fill="#A07C10" transform="rotate(90 0 200)"/>
+        <circle cx="0" cy="200" r="7" fill="#7a5c08"/>
+      </g>
+
+      <!-- Rose: red small far right (x=1000) -->
+      <g transform="translate(1000, 55)">
+        <line x1="0" y1="370" x2="0" y2="250" stroke="url(#stemG)" stroke-width="3.5"/>
+        <path d="M0 315 Q-22 300 -25 280 Q-8 288 0 301Z" fill="url(#leafG)"/>
+        <ellipse cx="0" cy="250" rx="21" ry="14" fill="url(#rpetal)" opacity="0.9" transform="rotate(-40 0 250)"/>
+        <ellipse cx="0" cy="250" rx="21" ry="14" fill="url(#rpetal)" opacity="0.9" transform="rotate(0 0 250)"/>
+        <ellipse cx="0" cy="250" rx="21" ry="14" fill="url(#rpetal)" opacity="0.9" transform="rotate(40 0 250)"/>
+        <ellipse cx="0" cy="250" rx="21" ry="14" fill="url(#rpetal)" opacity="0.9" transform="rotate(80 0 250)"/>
+        <ellipse cx="0" cy="250" rx="21" ry="14" fill="url(#rpetal)" opacity="0.9" transform="rotate(120 0 250)"/>
+        <ellipse cx="0" cy="250" rx="21" ry="14" fill="url(#rpetal)" opacity="0.9" transform="rotate(160 0 250)"/>
+        <ellipse cx="0" cy="250" rx="14" ry="9" fill="url(#dpetal)" transform="rotate(20 0 250)"/>
+        <ellipse cx="0" cy="250" rx="14" ry="9" fill="url(#dpetal)" transform="rotate(100 0 250)"/>
+        <circle cx="0" cy="250" r="6" fill="#400008"/>
+      </g>
+
+      <!-- Rose: pink small (x=1100) -->
+      <g transform="translate(1100, 70)">
+        <line x1="0" y1="370" x2="0" y2="265" stroke="url(#stemG)" stroke-width="3"/>
+        <path d="M0 330 Q-20 316 -22 298 Q-6 306 0 318Z" fill="url(#leafG)"/>
+        <ellipse cx="0" cy="265" rx="19" ry="12" fill="url(#ppetal)" opacity="0.9" transform="rotate(-40 0 265)"/>
+        <ellipse cx="0" cy="265" rx="19" ry="12" fill="url(#ppetal)" opacity="0.9" transform="rotate(0 0 265)"/>
+        <ellipse cx="0" cy="265" rx="19" ry="12" fill="url(#ppetal)" opacity="0.9" transform="rotate(40 0 265)"/>
+        <ellipse cx="0" cy="265" rx="19" ry="12" fill="url(#ppetal)" opacity="0.9" transform="rotate(80 0 265)"/>
+        <ellipse cx="0" cy="265" rx="19" ry="12" fill="url(#ppetal)" opacity="0.9" transform="rotate(120 0 265)"/>
+        <ellipse cx="0" cy="265" rx="19" ry="12" fill="url(#ppetal)" opacity="0.9" transform="rotate(160 0 265)"/>
+        <ellipse cx="0" cy="265" rx="12" ry="8" fill="#C85070" transform="rotate(20 0 265)"/>
+        <circle cx="0" cy="265" r="5" fill="#a03050"/>
+      </g>
+
+      <!-- Rose: red left edge (x=60) -->
+      <g transform="translate(60, 80)">
+        <line x1="0" y1="370" x2="0" y2="270" stroke="url(#stemG)" stroke-width="3.5"/>
+        <path d="M0 320 Q-20 305 -23 285 Q-7 292 0 305Z" fill="url(#leafG)"/>
+        <ellipse cx="0" cy="270" rx="20" ry="13" fill="url(#rpetal)" opacity="0.9" transform="rotate(-40 0 270)"/>
+        <ellipse cx="0" cy="270" rx="20" ry="13" fill="url(#rpetal)" opacity="0.9" transform="rotate(0 0 270)"/>
+        <ellipse cx="0" cy="270" rx="20" ry="13" fill="url(#rpetal)" opacity="0.9" transform="rotate(40 0 270)"/>
+        <ellipse cx="0" cy="270" rx="20" ry="13" fill="url(#rpetal)" opacity="0.9" transform="rotate(80 0 270)"/>
+        <ellipse cx="0" cy="270" rx="20" ry="13" fill="url(#rpetal)" opacity="0.9" transform="rotate(120 0 270)"/>
+        <ellipse cx="0" cy="270" rx="20" ry="13" fill="url(#rpetal)" opacity="0.9" transform="rotate(160 0 270)"/>
+        <circle cx="0" cy="270" r="6" fill="#400008"/>
+      </g>
+
+      <!-- Rose: gold small (x=490) -->
+      <g transform="translate(490, 90)">
+        <line x1="0" y1="370" x2="0" y2="280" stroke="url(#stemG)" stroke-width="3"/>
+        <path d="M0 330 Q-18 316 -20 298 Q-6 306 0 318Z" fill="url(#leafG)"/>
+        <ellipse cx="0" cy="280" rx="18" ry="11" fill="url(#gpetal)" opacity="0.9" transform="rotate(-40 0 280)"/>
+        <ellipse cx="0" cy="280" rx="18" ry="11" fill="url(#gpetal)" opacity="0.9" transform="rotate(0 0 280)"/>
+        <ellipse cx="0" cy="280" rx="18" ry="11" fill="url(#gpetal)" opacity="0.9" transform="rotate(40 0 280)"/>
+        <ellipse cx="0" cy="280" rx="18" ry="11" fill="url(#gpetal)" opacity="0.9" transform="rotate(80 0 280)"/>
+        <ellipse cx="0" cy="280" rx="18" ry="11" fill="url(#gpetal)" opacity="0.9" transform="rotate(120 0 280)"/>
+        <ellipse cx="0" cy="280" rx="18" ry="11" fill="url(#gpetal)" opacity="0.9" transform="rotate(160 0 280)"/>
+        <circle cx="0" cy="280" r="5" fill="#7a5c08"/>
+      </g>
+
+      <!-- foliage fill at bottom -->
+      <path d="M0 375 Q80 340 160 360 Q240 345 320 365 Q400 348 480 368 Q560 352 640 370 Q720 355 800 372 Q880 358 960 374 Q1040 360 1120 375 Q1160 368 1200 375 L1200 420 L0 420Z" fill="#0a1a06" opacity="0.9"/>
+      <path d="M0 385 Q60 365 140 378 Q220 362 300 380 Q380 365 460 382 Q540 368 620 382 Q700 368 780 384 Q860 370 940 385 Q1020 372 1100 384 Q1150 378 1200 385 L1200 420 L0 420Z" fill="#06120408" opacity="0.95"/>
+
+      <!-- Scattered small flowers (wild flowers) -->
+      <!-- Pink daisy at x=220 -->
+      <g transform="translate(220,352)">
+        <line x1="0" y1="0" x2="0" y2="28" stroke="#2d5a1b" stroke-width="2.5"/>
+        <circle cx="0" cy="-2" r="5" fill="#F9C0D0"/>
+        <circle cx="-7" cy="0" r="4" fill="#F9C0D0"/>
+        <circle cx="7" cy="0" r="4" fill="#F9C0D0"/>
+        <circle cx="-5" cy="-7" r="4" fill="#E8829A"/>
+        <circle cx="5" cy="-7" r="4" fill="#E8829A"/>
+        <circle cx="0" cy="-5" r="6" fill="#D4AF37"/>
+      </g>
+      <!-- Gold daisy at x=380 -->
+      <g transform="translate(380,348)">
+        <line x1="0" y1="0" x2="0" y2="26" stroke="#2d5a1b" stroke-width="2"/>
+        <circle cx="0" cy="-2" r="5" fill="#F4D06F"/>
+        <circle cx="-7" cy="0" r="4" fill="#F4D06F"/>
+        <circle cx="7" cy="0" r="4" fill="#F4D06F"/>
+        <circle cx="-5" cy="-7" r="4" fill="#D4AF37"/>
+        <circle cx="5" cy="-7" r="4" fill="#D4AF37"/>
+        <circle cx="0" cy="-5" r="6" fill="#8B0000"/>
+      </g>
+      <!-- Red daisy at x=540 -->
+      <g transform="translate(540,355)">
+        <line x1="0" y1="0" x2="0" y2="22" stroke="#2d5a1b" stroke-width="2"/>
+        <circle cx="0" cy="-2" r="4" fill="#FF4466"/>
+        <circle cx="-6" cy="0" r="3.5" fill="#FF4466"/>
+        <circle cx="6" cy="0" r="3.5" fill="#FF4466"/>
+        <circle cx="-4" cy="-6" r="3.5" fill="#C41E3A"/>
+        <circle cx="4" cy="-6" r="3.5" fill="#C41E3A"/>
+        <circle cx="0" cy="-4" r="5" fill="#F4D06F"/>
+      </g>
+      <!-- Pink daisy at x=680 -->
+      <g transform="translate(680,350)">
+        <line x1="0" y1="0" x2="0" y2="24" stroke="#2d5a1b" stroke-width="2"/>
+        <circle cx="0" cy="-2" r="4" fill="#F9C0D0"/>
+        <circle cx="-6" cy="0" r="3.5" fill="#F9C0D0"/>
+        <circle cx="6" cy="0" r="3.5" fill="#F9C0D0"/>
+        <circle cx="-4" cy="-6" r="3.5" fill="#E8829A"/>
+        <circle cx="4" cy="-6" r="3.5" fill="#E8829A"/>
+        <circle cx="0" cy="-4" r="5" fill="#D4AF37"/>
+      </g>
+      <!-- gold daisy at x=820 -->
+      <g transform="translate(820,354)">
+        <line x1="0" y1="0" x2="0" y2="22" stroke="#2d5a1b" stroke-width="2"/>
+        <circle cx="0" cy="-2" r="4" fill="#F4D06F"/>
+        <circle cx="-6" cy="0" r="3.5" fill="#F4D06F"/>
+        <circle cx="6" cy="0" r="3.5" fill="#F4D06F"/>
+        <circle cx="-4" cy="-6" r="3.5" fill="#D4AF37"/>
+        <circle cx="4" cy="-6" r="3.5" fill="#D4AF37"/>
+        <circle cx="0" cy="-4" r="5" fill="#8B0000"/>
+      </g>
+      <!-- Red daisy at x=940 -->
+      <g transform="translate(940,350)">
+        <line x1="0" y1="0" x2="0" y2="25" stroke="#2d5a1b" stroke-width="2.5"/>
+        <circle cx="0" cy="-2" r="5" fill="#FF4466"/>
+        <circle cx="-7" cy="0" r="4" fill="#FF4466"/>
+        <circle cx="7" cy="0" r="4" fill="#FF4466"/>
+        <circle cx="-5" cy="-7" r="4" fill="#C41E3A"/>
+        <circle cx="5" cy="-7" r="4" fill="#C41E3A"/>
+        <circle cx="0" cy="-5" r="6" fill="#F4D06F"/>
+      </g>
+      <!-- pink at x=1060 -->
+      <g transform="translate(1060,356)">
+        <line x1="0" y1="0" x2="0" y2="20" stroke="#2d5a1b" stroke-width="2"/>
+        <circle cx="0" cy="-2" r="4" fill="#F9C0D0"/>
+        <circle cx="-5" cy="0" r="3" fill="#E8829A"/>
+        <circle cx="5" cy="0" r="3" fill="#E8829A"/>
+        <circle cx="-3" cy="-5" r="3" fill="#E8829A"/>
+        <circle cx="3" cy="-5" r="3" fill="#E8829A"/>
+        <circle cx="0" cy="-3" r="4.5" fill="#D4AF37"/>
+      </g>
+      <!-- gold at x=1160 -->
+      <g transform="translate(1160,354)">
+        <line x1="0" y1="0" x2="0" y2="22" stroke="#2d5a1b" stroke-width="2"/>
+        <circle cx="0" cy="-2" r="4" fill="#F4D06F"/>
+        <circle cx="-6" cy="0" r="3.5" fill="#F4D06F"/>
+        <circle cx="6" cy="0" r="3.5" fill="#F4D06F"/>
+        <circle cx="-4" cy="-6" r="3.5" fill="#D4AF37"/>
+        <circle cx="4" cy="-6" r="3.5" fill="#D4AF37"/>
+        <circle cx="0" cy="-4" r="5" fill="#8B0000"/>
+      </g>
+
+      <!-- "I love Alae" text in garden -->
+      <text x="600" y="410" text-anchor="middle" font-family="'Playfair Display', serif" font-size="18" font-style="italic" fill="#D4AF37" opacity="0.8">🌹 I love Alae So mucchh 🌹</text>
+
+    </svg>
+  </div>
+
+</div>
+
+<script>
+// Create stars
+const starsEl = document.getElementById('stars');
+for (let i = 0; i < 80; i++) {
+  const s = document.createElement('div');
+  s.className = 'star';
+  const size = Math.random() * 2.5 + 0.5;
+  s.style.cssText = `
+    width:${size}px; height:${size}px;
+    left:${Math.random()*100}%;
+    top:${Math.random()*100}%;
+    --dur:${2 + Math.random()*5}s;
+    --delay:${Math.random()*6}s;
+  `;
+  starsEl.appendChild(s);
+}
+
+// Falling rose petals
+const petalsEl = document.getElementById('petals');
+const petalEmojis = ['🌸','🌹','🌺','✿','❀','🌷'];
+for (let i = 0; i < 18; i++) {
+  const p = document.createElement('div');
+  p.className = 'petal';
+  p.textContent = petalEmojis[Math.floor(Math.random() * petalEmojis.length)];
+  p.style.cssText = `
+    left:${Math.random()*100}%;
+    --pdur:${8 + Math.random()*12}s;
+    --pdelay:${Math.random()*12}s;
+    font-size:${12 + Math.random()*14}px;
+  `;
+  petalsEl.appendChild(p);
+}
+
+// Floating hearts
+const heartsEl = document.getElementById('hearts');
+for (let i = 0; i < 12; i++) {
+  const h = document.createElement('div');
+  h.className = 'heart';
+  h.textContent = i % 3 === 0 ? '❤️' : i % 3 === 1 ? '💛' : '💗';
+  h.style.cssText = `
+    left:${Math.random()*100}%;
+    --hdur:${10 + Math.random()*10}s;
+    --hdelay:${Math.random()*15}s;
+  `;
+  heartsEl.appendChild(h);
+}
+</script>
+</body>
+</html>
